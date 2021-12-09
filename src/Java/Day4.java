@@ -1,7 +1,7 @@
 package Java;
 
 import java.util.Arrays;
-
+//TODO Testscenario erfolgreich (inputDay4 - Kopie.txt), Aufgabe aber falsche lösung (inputDay4.txt)
 public class Day4 extends Day {
     public Day4(String fileName) {
         super(fileName);
@@ -13,12 +13,13 @@ public class Day4 extends Day {
     boolean[][][] isBingoField;
     String[] numbers;
 
-    public int solveDayPartOne() {
+    @Override
+    public String solveDayPartOne() {
         originalString = Arrays.toString(txtInput);
 
         createFields();
 
-        return checkIsBingo();
+        return checkIsBingo() + "";
     }
 
     private void createFields() {
@@ -47,9 +48,8 @@ public class Day4 extends Day {
     }
 
     private int checkIsBingo() {
-        for (int i = 0, luckyNumbersLength = luckyNumbers.length; i < luckyNumbersLength; i++) {
-            String luckyNumber = luckyNumbers[i];
 
+        for (String luckyNumber : luckyNumbers) {
             for (int k = 0; k < bingoFieldNumbers.length; k++) {
                 for (int j = 0; j < 5; j++) {
                     for (int l = 0; l < 5; l++) {
@@ -98,6 +98,7 @@ public class Day4 extends Day {
         return originalString.split(", ");
     }
 
+    @Override
     public String solveDayPartTwo() {
         return "";
     }

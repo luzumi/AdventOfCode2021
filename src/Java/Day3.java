@@ -39,7 +39,8 @@ public class Day3 extends Day {
     //The epsilon rate is calculated in a similar way; rather than use the most common bit, the least common bit from each position is used. So, the epsilon rate is 01001, or 9 in decimal. Multiplying the gamma rate (22) by the epsilon rate (9) produces the power consumption, 198.
     //
     //Use the binary numbers in your diagnostic report to calculate the gamma rate and epsilon rate, then multiply them together. What is the power consumption of the submarine? (Be sure to represent your answer in decimal, not binary.)
-    public int solveDayPartOne() {
+    @Override
+    public String solveDayPartOne() {
         String resultBinGamma = "";
         String resultBinEpsilon = "";
         int length = txtInput[0].length();
@@ -63,7 +64,7 @@ public class Day3 extends Day {
         }
         gama = Integer.parseInt(resultBinGamma, 2);
         epsilon = Integer.parseInt(resultBinEpsilon, 2);
-        return gama * epsilon;
+        return gama * epsilon + "";
     }
 
     //--- Part Two ---
@@ -100,12 +101,12 @@ public class Day3 extends Day {
     //Finally, to find the life support rating, multiply the oxygen generator rating (23) by the CO2 scrubber rating (10) to get 230.
     //
     //Use the binary numbers in your diagnostic report to calculate the oxygen generator rating and CO2 scrubber rating, then multiply them together. What is the life support rating of the submarine? (Be sure to represent your answer in decimal, not binary.)
-    public int solveDayPartTwo() {
-
+    @Override
+    public String solveDayPartTwo() {
         int oxygen = Integer.parseInt(filter(txtInput, 0, "oxygen"), 2);
         int co2 = Integer.parseInt(filter(txtInput, 0, "co2"), 2);
         System.out.println("Oxygen: " + oxygen + " CO2: " + co2);
-        return oxygen * co2;
+        return oxygen * co2 + "";
     }
 
     private String filter(String[] txtInput, int counter, String choice) {

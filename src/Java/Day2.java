@@ -42,7 +42,8 @@ public class Day2 extends Day {
     //
     //Calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
 
-    public int solveDayPartOne() {
+    @Override
+    public String solveDayPartOne() {
         for (String s : txtInput) {
             int number = Integer.parseInt(s.substring(s.indexOf(" ") + 1));
             if (s.contains("forward")) {
@@ -51,7 +52,7 @@ public class Day2 extends Day {
                 depth += s.contains("up") ? -number : number;
             }
         }
-        return horizontal * depth;
+        return horizontal * depth + "";
     }
 
     //--- Part Two ---
@@ -80,7 +81,8 @@ public class Day2 extends Day {
     //After following these new instructions, you would have a horizontal position of 15 and a depth of 60. (Multiplying these produces 900.)
     //
     //Using this new interpretation of the commands, calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
-    public int solveDayPartTwo(){
+    @Override
+    public String solveDayPartTwo(){
         int aim = 0;
         int number;
         horizontal = 0;
@@ -99,6 +101,6 @@ public class Day2 extends Day {
                 aim += number;
             }
         }
-        return depth * horizontal;
+        return (depth * horizontal) + "";
     }
 }

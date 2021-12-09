@@ -51,20 +51,15 @@ public class Day1 extends Day {
     protected int counterPartOne = 0;
     protected int counterPartTwo = 0;
 
-    public int getCounterPartOne() {
-        return counterPartOne;
-    }
-
-    public int getCounterPartTwo() {
-        return counterPartTwo;
-    }
     public Day1(String fileName) {
         super(fileName);
     }
-    public void solveDayPartOne() {
+    @Override
+    public String solveDayPartOne() {
         int[] input = new int[this.txtInput.length];
         IntStream.range(0, txtInput.length).forEach(i -> input[i] = Integer.parseInt(txtInput[i]));
         IntStream.range(1, input.length).filter(i -> input[i] > input[i - 1]).forEach(i -> counterPartOne++);
+        return counterPartOne + "";
     }
 
     //--- Part Two ---
@@ -102,12 +97,14 @@ public class Day1 extends Day {
     //In this example, there are 5 sums that are larger than the previous sum.
     //
     //Consider sums of a three-measurement sliding window. How many sums are larger than the previous sum?
-    public void solveDayPartTwo(){
+    @Override
+    public String solveDayPartTwo(){
         int[] input = new int[txtInput.length];
         IntStream.range(0, txtInput.length).forEach(i -> input[i] = Integer.parseInt(txtInput[i]));
         int[] comparsion = new int[ input.length];
         IntStream.range(0, input.length - 2).forEach(i -> comparsion[i] = sum3Measurements(i, input));
         IntStream.range(1, comparsion.length).filter(i -> comparsion[i] > comparsion[i - 1]).forEach(i -> counterPartTwo++);
+        return counterPartTwo + "";
     }
 
     private int sum3Measurements(int index , int[] input) {
