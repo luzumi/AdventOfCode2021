@@ -103,12 +103,12 @@ public class Day7 extends Day {
         int minPos = Arrays.stream(positions).min().getAsInt();
         int maxPos = Arrays.stream(positions).max().getAsInt();
         int fuel = IntStream.range(minPos, maxPos + 1).parallel()
-                .map(pos -> cost2(pos, positions)).min().getAsInt();
+                .map(pos -> calculatePart2(pos, positions)).min().getAsInt();
 
         return String.valueOf(fuel);
     }
 
-    private static int cost2(int pos, int[] crabs) {
+    private static int calculatePart2(int pos, int[] crabs) {
         int fuel = 0;
         for (int crab : crabs) {
             int moves = Math.abs(pos - crab);
