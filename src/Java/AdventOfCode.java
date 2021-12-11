@@ -107,9 +107,13 @@ public class AdventOfCode {
 //        System.out.println("Day8/1 " + day8.solveDayPartOne());
 //        System.out.println("Day8/2 " + day8.solveDayPartTwo());
 
-        Day day9 = new Day9("inputDay9.txt");
-        System.out.println("Day9/1 " + day9.solveDayPartOne());
-        System.out.println("Day9/2 " + day9.solveDayPartTwo());
+//        Day day9 = new Day9("inputDay9.txt");
+//        System.out.println("Day9/1 " + day9.solveDayPartOne());
+//        System.out.println("Day9/2 " + day9.solveDayPartTwo());
+
+        Day day10 = new Day10("inputDay10.txt");
+        System.out.println("Day10/1 " + day10.solveDayPartOne());
+        System.out.println("Day10/2 " + day10.solveDayPartTwo());
 
     }
 }

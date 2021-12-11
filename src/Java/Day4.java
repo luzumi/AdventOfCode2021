@@ -1,7 +1,6 @@
 package Java;
 
 import java.util.Arrays;
-//TODO Testscenario erfolgreich (inputDay4 - Kopie.txt), Aufgabe aber falsche lösung (inputDay4.txt)
 public class Day4 extends Day {
     public Day4(String fileName) {
         super(fileName);
@@ -92,7 +91,7 @@ public class Day4 extends Day {
 
     private String[] formatString() {
         luckyNumbers = originalString.substring(1, originalString.indexOf(" ")).split(",");
-        originalString = originalString.replaceAll("  ", " ");
+        originalString = originalString.replaceAll(" {2}", " ");
         originalString = originalString.replaceAll(", ,", ",");
         originalString = originalString.substring(originalString.indexOf(", ") + 2, originalString.length() - 1);
         return originalString.split(", ");
