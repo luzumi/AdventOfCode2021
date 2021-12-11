@@ -182,14 +182,14 @@ public class Day5 extends Day {
 
     private void switchCoordinates(Point coordinate1, Point coordinate2) {
         if (coordinate1.x > coordinate2.x) {
-            var temp = coordinate1.x;
+            int temp = coordinate1.x;
             this.coordinate1.x = coordinate2.x;
             this.coordinate2.x = temp;
             temp = coordinate1.y;
             this.coordinate1.y = coordinate2.y;
             this.coordinate2.y = temp;
         } else if (coordinate1.y > coordinate2.y) {
-            var temp = coordinate1.y;
+            int temp = coordinate1.y;
             this.coordinate1.y = coordinate2.y;
             this.coordinate2.y = temp;
             temp = coordinate1.x;

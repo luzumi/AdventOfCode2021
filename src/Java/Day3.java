@@ -44,7 +44,7 @@ public class Day3 extends Day {
         String resultBinGamma = "";
         String resultBinEpsilon = "";
         int length = txtInput[0].length();
-        var gama = 0;
+        int gama = 0;
         int epsilon = 0;
         int count0;
         int count1;

@@ -103,9 +103,13 @@ public class AdventOfCode {
         //Because the digits 1, 4, 7, and 8 each use a unique number of segments, you should be able to tell which combinations of signals correspond to those digits. Counting only digits in the output values (the part after | on each line), in the above example, there are 26 instances of digits that use a unique number of segments (highlighted above).
         //
         //In the output values, how many times do digits 1, 4, 7, or 8 appear?
-        Day day8 = new Day8("inputDay8.txt");
-        System.out.println("Day8/1 " + day8.solveDayPartOne());
-        System.out.println("Day8/2 " + day8.solveDayPartTwo());
+//        Day day8 = new Day8("inputDay8.txt");
+//        System.out.println("Day8/1 " + day8.solveDayPartOne());
+//        System.out.println("Day8/2 " + day8.solveDayPartTwo());
+
+        Day day9 = new Day9("inputDay9.txt");
+        System.out.println("Day9/1 " + day9.solveDayPartOne());
+        System.out.println("Day9/2 " + day9.solveDayPartTwo());
 
     }
 }
