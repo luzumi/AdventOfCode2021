@@ -1,6 +1,11 @@
 package Java;
 
+import java.util.*;
+
 public class Day9 extends Day {
+    static ArrayList<Integer> numbers = new ArrayList<>();
+    int[][] heightMap;
+
     public Day9(String fileName) {
         super(fileName);
     }
@@ -30,7 +35,7 @@ public class Day9 extends Day {
 //Find all the low points on your heightmap. What is the sum of the risk levels of all low points on your heightmap?
     @Override
     public String solveDayPartOne() {
-        int[][] heightMap = new int[txtInput.length][txtInput[0].length()];
+        heightMap = new int[txtInput.length][txtInput[0].length()];
         for (int i = 0; i < txtInput.length; i++) {
             for (int j = 0; j < txtInput[0].length(); j++) heightMap[i][j] = txtInput[i].charAt(j) - '0';
         }
@@ -129,8 +134,115 @@ public class Day9 extends Day {
     //What do you get if you multiply together the sizes of the three largest basins?
     @Override
     public String solveDayPartTwo() {
-
-        return null;
+        for (int i = 0; i < heightMap.length; i++) {
+            for (int j = 0; j < heightMap[i].length; j++) {
+                if (i == 0 && j == 0) {
+                    if (heightMap[i][j + 1] > heightMap[i][j] &&
+                            heightMap[i + 1][j] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else if (i == 0 && j == heightMap[i].length - 1) {
+                    if (heightMap[i][j - 1] > heightMap[i][j] &&
+                            heightMap[i + 1][j] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else if (i == heightMap.length - 1 && j == 0) {
+                    if (heightMap[i][j + 1] > heightMap[i][j] &&
+                            heightMap[i - 1][j] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else if (i == heightMap.length - 1 && j ==
+                        heightMap[i].length - 1) {
+                    if (heightMap[i][j - 1] > heightMap[i][j] &&
+                            heightMap[i - 1][j] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else if (i == 0) {
+                    if (heightMap[i][j - 1] > heightMap[i][j] &&
+                            heightMap[i + 1][j] > heightMap[i][j] &&
+                            heightMap[i][j + 1] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else if (i == heightMap.length - 1) {
+                    if (heightMap[i][j - 1] > heightMap[i][j] &&
+                            heightMap[i - 1][j] > heightMap[i][j] &&
+                            heightMap[i][j + 1] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else if (j == 0) {
+                    if (heightMap[i + 1][j] > heightMap[i][j] &&
+                            heightMap[i - 1][j] > heightMap[i][j] &&
+                            heightMap[i][j + 1] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else if (j == heightMap.length - 1) {
+                    if (heightMap[i + 1][j] > heightMap[i][j] &&
+                            heightMap[i - 1][j] > heightMap[i][j] &&
+                            heightMap[i][j - 1] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                } else {
+                    if (heightMap[i + 1][j] > heightMap[i][j] &&
+                            heightMap[i - 1][j] > heightMap[i][j] &&
+                            heightMap[i][j - 1] > heightMap[i][j] &&
+                            heightMap[i][j + 1] > heightMap[i][j]) {
+                        explore(i, j, heightMap);
+                    }
+                }
+            }
+        }
+        Collections.sort(numbers);
+        Collections.reverse(numbers);
+        return String.valueOf(numbers.get(0) * numbers.get(1) * numbers.get(2));
     }
 
+
+    public static void explore(int i, int j, int[][] heightMap) {
+        Stack<String> stack = new Stack<>();
+        Set<String> set = new HashSet<>();
+        int x, y, count;
+        stack.push((i + "," + j));
+        set.add((i + "," + j));
+        count = 0;
+
+        while (stack.size() > 0) {
+            String pop = stack.pop();
+            x = Integer.parseInt(pop.substring(0, pop.indexOf(",")));
+            y = Integer.parseInt(pop.substring(pop.indexOf(",") + 1));
+
+            if (y - 1 >= 0 && heightMap[x][y - 1] != 9) {
+                int size = set.size();
+                set.add((x) + "," + (y - 1));
+                if (size != set.size()) {
+                    stack.push((x) + "," + (y - 1));
+                }
+            }
+            if (y + 1 < heightMap[x].length && heightMap[x][y + 1] != 9) {
+                int size = set.size();
+                set.add((x) + "," + (y + 1));
+                if (size != set.size()) {
+                    stack.push((x) + "," + (y + 1));
+                }
+            }
+            if (x - 1 >= 0 && heightMap[x - 1][y] != 9) {
+                int size = set.size();
+                set.add((x - 1) + "," + (y));
+                if (size != set.size()) {
+                    stack.push((x - 1) + "," + (y));
+                }
+            }
+            if (x + 1 < heightMap.length && heightMap[x + 1][y] != 9) {
+                int size = set.size();
+                set.add((x + 1) + "," + (y));
+                if (size != set.size()) {
+                    stack.push((x + 1) + "," + (y));
+                }
+            }
+            if (heightMap[x][y] == 9) {
+                count--;
+            }
+            count++;
+        }
+        numbers.add(count);
+    }
 }
