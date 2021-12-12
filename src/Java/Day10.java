@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Day10 extends Day {
     private ArrayList<String> input;
@@ -77,7 +78,6 @@ public class Day10 extends Day {
     @SuppressWarnings("GrazieInspection")
     @Override
     public String solveDayPartOne() {
-        //([]), {()()()}, <([{}])>, [<>({}){}[([])<>]], und sogar (((((((((())))))))))
         int sum = 0;
         for (String line : input) {
             line = reduceLine(line);
@@ -90,7 +90,6 @@ public class Day10 extends Day {
         for (int i = 0; i < line.length(); i++) {
             char c = line.charAt(i);
             if (c == ')' || c == ']' || c == '}' || c == '>') {
-
                 switch (c) {
                     case ')':
                         return 3;
@@ -100,7 +99,6 @@ public class Day10 extends Day {
                         return 1197;
                     case '>':
                         return 25137;
-
                 }
                 break;
             }
@@ -168,6 +166,90 @@ public class Day10 extends Day {
     //Find the completion string for each incomplete line, score the completion strings, and sort the scores. What is the middle score?
     @Override
     public String solveDayPartTwo() {
-        return null;
+        ArrayList<String> filter = filterLines();
+        long[] middleOfSum = new long[filter.size()];
+
+        calculateCosts(middleOfSum);
+
+        return String.valueOf(findMiddle(middleOfSum));
+    }
+
+    private ArrayList<String> filterLines() {
+        var inputTmp = input;
+        for (int i = 0, inputSize = input.size(); i < inputSize; i++) {
+            var line = input.get(i);
+            var reducedLine = reduceLine(line);
+
+            if (findFirstWrongSign(reducedLine) > 0) {
+                inputTmp.set(i, "");
+            }
+        }
+        inputTmp.removeIf(row -> row.length() == 0);
+        return inputTmp;
+    }
+
+    private void calculateCosts(long[] middleOfSum) {
+        long sum;
+        int count = 0;
+        String reducedLine;
+        for (String line : input) {
+            reducedLine = reduceLine(line);
+            sum = 0;
+            char[] charArray = reducedLine.toCharArray();
+            for (int j = charArray.length-1; j >= 0 ; j--) {
+                char c = charArray[j];
+                switch (c) {
+                    case '(' -> {
+                        sum *= 5;
+                        sum += 1;
+                    }
+                    case '[' -> {
+                        sum *= 5;
+                        sum += 2;
+                    }
+                    case '{' -> {
+                        sum *= 5;
+                        sum += 3;
+                    }
+                    case '<' -> {
+                        sum *= 5;
+                        sum += 4;
+                    }
+                    default -> {
+                    }
+                }
+            }
+            middleOfSum[count] = sum;
+            count++;
+        }
+    }
+
+    private long findMiddle(long[] middleOfSum) {
+        Arrays.sort(middleOfSum);
+        int[] countBigger = new int[middleOfSum.length];
+        int[] countSmaller = new int[middleOfSum.length];
+
+        for (int i = 0; i < middleOfSum.length; i++) {
+            int countBiggerCount = 0;
+            int countSmallerCount = 0;
+            for (long k : middleOfSum) {
+                if (middleOfSum[i] < k) {
+                    countSmallerCount++;
+                }
+                if (middleOfSum[i] > k) {
+                    countBiggerCount++;
+                }
+            }
+            countBigger[i] = countBiggerCount;
+            countSmaller[i] = countSmallerCount;
+        }
+
+        for (int i = 0, countBiggerLength = countBigger.length; i < countBiggerLength; i++) {
+            System.out.println(middleOfSum[i] + " " + countBigger[i] + " " + countSmaller[i]);
+            if (countBigger[i] == countSmaller[i]) {
+                return middleOfSum[i];
+            }
+        }
+        return 0;
     }
 }
