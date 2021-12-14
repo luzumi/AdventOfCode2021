@@ -47,10 +47,14 @@ public class AdventOfCode {
 //        Day day11 = new Day11("inputDay11.txt");
 //        System.out.println("Day11/1 " + day11.solveDayPartOne());
 //        System.out.println("Day11/2 " + day11.solveDayPartTwo());
+//
+//        Day day12 = new Day12("inputDay12.txt");
+//        System.out.println("Day12/1 " + day12.solveDayPartOne());
+//        System.out.println("Day12/2 " + day12.solveDayPartTwo());
 
-        Day day12 = new Day12("inputDay12.txt");
-        System.out.println("Day12/1 " + day12.solveDayPartOne());
-        System.out.println("Day12/2 " + day12.solveDayPartTwo());
+        Day day13 = new Day13("inputDay13.txt");
+        System.out.println("Day13/1 " + day13.solveDayPartOne());
+        System.out.println("Day13/2 " + day13.solveDayPartTwo());
 
     }
 }

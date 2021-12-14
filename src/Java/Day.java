@@ -12,7 +12,6 @@ public abstract class Day {
 
         try {
             txtInput = new BufferedReader(new FileReader("src/Ressources/" + fileName)).lines().toArray(String[]::new);
-            System.out.println(txtInput.length);
         } catch (IOException e) {
             e.printStackTrace();
             e.getLocalizedMessage();
@@ -20,6 +19,7 @@ public abstract class Day {
     }
 
     public abstract String solveDayPartOne();
+
 
     public abstract String solveDayPartTwo();
 
