@@ -1,6 +1,7 @@
 package Java;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Day12 extends Day {
 
@@ -8,6 +9,8 @@ public class Day12 extends Day {
     public Day12(String s) {
         super(s);
     }
+
+    Map<String, Node> graph = new HashMap<>();
 
     //--- Day 12: Passage Pathing ---
     //
@@ -162,7 +165,6 @@ public class Day12 extends Day {
     @Override
     public String solveDayPartOne() {
         var input = Arrays.stream(txtInput).map(line -> line.split("-")).toList();
-        var graph = new HashMap<String, Node>();
         for (var pair : input) {
             graph.computeIfAbsent(pair[0],
                             k -> new Node(k, new HashSet<>()))
@@ -174,7 +176,7 @@ public class Day12 extends Day {
                     .add(pair[0]);
         }
         return calculate(graph);
-        //part2(graph);
+
     }
 
     private static String calculate(Map<String, Node> graph) {
@@ -250,7 +252,41 @@ public class Day12 extends Day {
     //Given these new rules, how many paths through this cave system are there?
     @Override
     public String solveDayPartTwo() {
-        return null;
+        Deque<Deque<Node>> search_space = new ArrayDeque<>();
+        search_space.addLast(new ArrayDeque<>());
+        search_space.getLast().addLast(graph.get("start"));
+        int nPaths = 0;
+        while (!search_space.isEmpty()) {
+            var current_path = search_space.removeFirst();
+            var current_node = current_path.getLast();
+            for (String caveName : current_node.neighbors()) {
+                if (caveName.equals("end")) {
+                    nPaths++;
+                } else {
+                    Node cave = graph.get(caveName);
+                    if (cave.isSmallCave()) {
+                        var counts = current_path.stream()
+                                .filter(Node::isSmallCave)
+                                .collect(Collectors.groupingBy(Node::name,
+                                        Collectors.counting()));
+                        if (counts.containsKey(caveName)) {
+                            // this cave has already been traversed
+                            if (counts.values().stream().noneMatch(c -> c > 1)) {
+                                // No small caves have been visted twice.
+                                // Add a path that re-visits this one.
+                                search_space.addLast(appendNode(current_path, cave));
+                            }
+                        } else {
+                            // This room has not yet been traversed
+                            search_space.addLast(appendNode(current_path, cave));
+                        }
+                    } else {
+                        search_space.addLast(appendNode(current_path, cave));
+                    }
+                }
+            }
+        }
+        return "Part 2: " + nPaths;
     }
 
     private static boolean isSmallCaveName(String name) {
